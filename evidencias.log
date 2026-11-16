@@ -232,3 +232,95 @@ AVAILABLE 10 3 6
 [?2004lexit
 
 Script done on 2026-11-16 19:36:38-03:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2026-11-16 20:23:15-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="267" LINES="39"]
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ exitcat commands.txt ustomer[C[C[C[C[C
+[?2004l7,5,3
+3,2,2
+9,0,2
+2,2,2
+4,3,3
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat customer.txt exit[Kcat commands.txt 
+[?2004lRQ 0 0 2 1
+RQ 2 3 0 2
+RQ 1 2 0 0
+RQ 4 0 0 2
+RL 0 0 1 1
+RQ 3 2 1 1
+*
+RQ 4 4 0 0
+RQ 1 1 0 2
+RQ 0 0 2 0
+RQ 2 0 1 0
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat commands.txt ustomer[C[C[C[C[Cexit[Kcat commands.txt ustomer[C[C[C[C[C[2P./banker 10 5 7
+[?2004lResultado salvo em result.txt.
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat result.txt 
+[?2004lAllocate to customer 0 the resources 0 2 1
+Allocate to customer 2 the resources 3 0 2
+Allocate to customer 1 the resources 2 0 0
+Allocate to customer 4 the resources 0 0 2
+Allocate to customer 3 the resources 2 1 1
+The resources 3 2 1 are not enough to customer 4 request 4 0 0
+The resources 3 2 1 are not enough to customer 1 request 1 0 2
+The customer 0 request 0 2 0 was denied because result in an unsafe state
+The customer 2 request 0 1 0 was denied because exceed its maximum allocation
+Release from customer 0 the resources 0 1 1
+MAXIMUM | ALLOCATION | NEED
+7 5 3 | 0 1 0 | 7 4 3
+3 2 2 | 2 0 0 | 1 2 2
+9 0 2 | 3 0 2 | 6 0 0
+2 2 2 | 2 1 1 | 0 1 1
+4 3 3 | 0 0 2 | 4 3 1
+AVAILABLE 3 3 2
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ exit
+[?2004lexit
+
+Script done on 2026-11-16 20:23:43-03:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2026-11-16 20:53:45-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="267" LINES="40"]
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ whoami
+[?2004lguilherme
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ date
+[?2004lMon Nov 16 20:53:52 -03 2026
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ pwd
+[?2004l/home/guilherme/SO/Banker
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ pwddatewhoami[2Pexitcat result.txt ./banker 10 5 7cat result.txt ./banker 10 5 7cat commands.txt ustomer[C[C[C[C[C
+[?2004l7,5,3
+3,2,2
+9,0,2
+2,2,2
+4,3,3
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat customer.txt pwd[Kdatewhoami[2Pexitcat result.txt ./banker 10 5 7cat commands.txt ustomer[C[C[C[C[Commands[C[C[C[C[C
+[?2004lRQ 0 0 2 1
+RQ 2 3 0 2
+RQ 1 2 0 0
+RQ 4 0 0 2
+RL 0 0 1 1
+RQ 3 2 1 1
+*
+RQ 4 4 0 0
+RQ 1 1 0 2
+RQ 0 0 2 0
+RQ 2 0 1 0
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat commands.txt ustomer[C[C[C[C[Cpwd[Kdatewhoami[2Pexitcat result.txt ./banker 10 5 7cat commands.txt [2P./banker 10 5 7
+[?2004lResultado salvo em result.txt.
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ ./banker 10 5 7cat commands.txt ustomer[C[C[C[C[Cpwd[Kdatewhoami[2Pexitcat result.txt 
+[?2004lAllocate to customer 0 the resources 0 2 1
+Allocate to customer 2 the resources 3 0 2
+Allocate to customer 1 the resources 2 0 0
+Allocate to customer 4 the resources 0 0 2
+Release from customer 0 the resources 0 1 1
+Allocate to customer 3 the resources 2 1 1
+MAXIMUM | ALLOCATION | NEED
+7 5 3 | 0 1 0 | 7 4 3
+3 2 2 | 2 0 0 | 1 2 2
+9 0 2 | 3 0 2 | 6 0 0
+2 2 2 | 2 1 1 | 0 1 1
+4 3 3 | 0 0 2 | 4 3 1
+AVAILABLE 3 3 2
+The resources 3 3 2 are not enough to customer 4 request 4 0 0
+Allocate to customer 1 the resources 1 0 2
+The customer 0 request 0 2 0 was denied because result in an unsafe state
+The customer 2 request 0 1 0 was denied because exceed its maximum allocation
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ exit
+[?2004lexit
+
+Script done on 2026-11-16 20:55:23-03:00 [COMMAND_EXIT_CODE="0"]
