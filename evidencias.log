@@ -160,3 +160,75 @@ Quantidade de comandos encontrados: 11
 [?2004lexit
 
 Script done on 2026-11-16 12:42:14-03:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2026-11-16 14:14:34-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="267" LINES="19"]
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ whoami
+[?2004lguilherme
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ pwd
+[?2004l/home/guilherme/SO/Banker
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ date
+[?2004lMon Nov 16 14:14:42 -03 2026
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat customer.txt 
+[?2004l7,5,3
+3,2,2
+9,0,2
+2,2,2
+4,3,3[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat customer.txt [K[K[K[K[K[K[K[K[K[K[K[Kommands.txt 
+[?2004lRQ 0 0 2 1[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat commands.txt ustomer[C[C[C[C[Cdate[Kcat customer.txt ommands[C[C[C[C[Customer[C[C[C[C[Cdate[K[1Ppwdwhoami[2Pexit./banker 1 1 13 3 21 1 1exit[K./banker 1 1 13 3 2cat customer.txtgcc main.c -o bankerpwd[Kdatewhoami[2Pexitwhoami[2Pdate[1Ppwdgcc main.c -o banker[4Pcat customer.txt[2P./banker 3 3 21 1 1exit[Kwhoami[3Ppwddatecat customer.txt ommands[C[C[C[C[C[K/cat commands.txt ustomer[C[C[C[C[Cdate[K[1Ppwdwhoami[2Pexit./banker 1 1 1[K[K[K[K0 5 7
+[?2004lMAXIMUM | ALLOCATION | NEED
+7 5 3 | 0 0 0 | 7 5 3
+3 2 2 | 0 0 0 | 3 2 2
+9 0 2 | 0 0 0 | 9 0 2
+2 2 2 | 0 0 0 | 2 2 2
+4 3 3 | 0 0 0 | 4 3 3
+AVAILABLE 10 5 7
+Estado seguro. Sequencia segura: 0 -> 1 -> 2 -> 3 -> 4
+The customer 0 request 0 2 1 was denied because result in an unsafe state
+
+Estado final apos as requisicoes:
+MAXIMUM | ALLOCATION | NEED
+7 5 3 | 0 0 0 | 7 7 4
+3 2 2 | 0 0 0 | 3 2 2
+9 0 2 | 0 0 0 | 9 0 2
+2 2 2 | 0 0 0 | 2 2 2
+4 3 3 | 0 0 0 | 4 3 3
+AVAILABLE 10 5 7
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ exit
+[?2004lexit
+
+Script done on 2026-11-16 14:15:38-03:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2026-11-16 19:35:49-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="267" LINES="35"]
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ whoami
+[?2004lguilherme
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ date
+[?2004lMon Nov 16 19:35:54 -03 2026
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ pwd
+[?2004l/home/guilherme/SO/Banker
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ pwddatewhoami[2Pexit./banker 10 5 7cat commands.txt [2P./banker 10 5 7
+[?2004lMAXIMUM | ALLOCATION | NEED
+7 5 3 | 0 0 0 | 7 5 3
+3 2 2 | 0 0 0 | 3 2 2
+9 0 2 | 0 0 0 | 9 0 2
+2 2 2 | 0 0 0 | 2 2 2
+4 3 3 | 0 0 0 | 4 3 3
+AVAILABLE 10 5 7
+Estado seguro. Sequencia segura: 0 -> 1 -> 2 -> 3 -> 4
+Allocate to customer 0 the resources 0 2 1
+
+Estado final apos as requisicoes:
+MAXIMUM | ALLOCATION | NEED
+7 5 3 | 0 2 1 | 7 3 2
+3 2 2 | 0 0 0 | 3 2 2
+9 0 2 | 0 0 0 | 9 0 2
+2 2 2 | 0 0 0 | 2 2 2
+4 3 3 | 0 0 0 | 4 3 3
+AVAILABLE 10 3 6
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ exit[K[K[K[Kcat customer.txt 
+[?2004l7,5,3
+3,2,2
+9,0,2
+2,2,2
+4,3,3[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat customer.txt [2P./banker 10 5 7cat customer.txt [K[K[K[K[K[K[K[K[K[K[K[Kommands.txt 
+[?2004lRQ 0 0 2 1[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ exit
+[?2004lexit
+
+Script done on 2026-11-16 19:36:38-03:00 [COMMAND_EXIT_CODE="0"]
