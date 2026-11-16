@@ -1,7 +1,9 @@
 Script started on 2026-11-16 05:10:16-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="267" LINES="21"]
 [?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ exit./banker 10 5 7exit[K[Kgcc main.c _[K-o banker
-[?2004l[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ gcc main.c -o bankerexit[Kgcc main.c -o bankerexit[K./banker 10 5 7[7Pgit push./banker 10 5 7
-[?2004l=== DADOS CARREGADOS ===
+[?2004l
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ gcc main.c -o bankerexit[Kgcc main.c -o bankerexit[K./banker 10 5 7[7Pgit push./banker 10 5 7
+[?2004l
+=== DADOS CARREGADOS ===
 Quantidade de recursos: 3
 Quantidade de clientes: 3
 
@@ -17,7 +19,8 @@ Quantidade de comandos encontrados: 11
 
 Leitura dos arquivos concluida com sucesso!
 [?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ ./banker 10 5 7
-[?2004l=== DADOS CARREGADOS ===
+[?2004l
+=== DADOS CARREGADOS ===
 Quantidade de recursos: 3
 Quantidade de clientes: 3
 
@@ -33,7 +36,8 @@ Quantidade de comandos encontrados: 11
 
 Leitura dos arquivos concluida com sucesso!
 [?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ ./banker 10 5 7[K5
-[?2004l=== DADOS CARREGADOS ===
+[?2004l
+=== DADOS CARREGADOS ===
 Quantidade de recursos: 3
 Quantidade de clientes: 3
 
@@ -49,12 +53,15 @@ Quantidade de comandos encontrados: 11
 
 Leitura dos arquivos concluida com sucesso!
 [?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ exit[K[K[K[Kecho custumer[K[K[K[Komer.txt 
-[?2004lcustomer.txt
+[?2004l
+customer.txt
 [?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ echo customer.txt [K[1P[1P[1P[1P[1P[C[1@c[1@a[1@t[1@ 
-[?2004l7,5,3
+[?2004l
+7,5,3
 3,2,2
 9,0,2[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat customer.txt[1P[1P[1P[1P[1P[1P[1P[1@o[1@m[1@m[1@a[1@n[1@d[1@s
-[?2004lRQ 0 0 2 1
+[?2004l
+RQ 0 0 2 1
 RQ 2 3 0 2
 RQ 1 2 0 0
 RQ 4 0 0 2
@@ -65,6 +72,91 @@ RQ 4 4 0 0
 RQ 1 1 0 2
 RQ 0 0 2 0
 RQ 2 0 1 0[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ exit
-[?2004lexit
+[?2004l
+exit
 
 Script done on 2026-11-16 05:12:13-03:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2026-11-16 07:04:13-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="267" LINES="19"]
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ h[Kwhoami
+[?2004lguilherme
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ pwd
+[?2004l/home/guilherme/SO/Banker
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ date
+[?2004lMon Nov 16 07:04:22 -03 2026
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ date[1Ppwdwhoami[2Pexit./banker 3 3 210 5 5cat customer.txt
+[?2004l4,0,0
+0,4,0
+0,0,3
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat customer.txtdate[K[1Ppwdwhoami[2Pexit./banker 3 3 210 5 5
+[?2004l=== ESTADO ATUAL DO SISTEMA ===
+
+MAXIMUM | ALLOCATION | NEED
+4 0 0 | 0 0 0 | 4 0 0 
+0 4 0 | 0 0 0 | 0 4 0 
+0 0 3 | 0 0 0 | 0 0 3 
+
+AVAILABLE 10 5 5 
+
+Estado inseguro: nao existe uma sequencia segura.
+
+Quantidade de comandos encontrados: 11
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ ./banker 10 5 5cat customer.txtdate[K[1Ppwdwhoami[2Pexit./banker 3 3 210 5 5[1P3 3 2
+[?2004l=== ESTADO ATUAL DO SISTEMA ===
+
+MAXIMUM | ALLOCATION | NEED
+4 0 0 | 0 0 0 | 4 0 0 
+0 4 0 | 0 0 0 | 0 4 0 
+0 0 3 | 0 0 0 | 0 0 3 
+
+AVAILABLE 3 3 2 
+
+Estado seguro.
+Sequencia segura: 0 -> 1 -> 2
+
+Quantidade de comandos encontrados: 11
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ exit
+[?2004lexit
+
+Script done on 2026-11-16 07:04:47-03:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2026-11-16 12:41:17-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="267" LINES="19"]
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ whoami
+[?2004lguilherme
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ dae[Kte
+[?2004lMon Nov 16 12:41:25 -03 2026
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ pwd
+[?2004l/home/guilherme/SO/Banker
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ pwddatewhoami[2Pexit./banker 3 3 210 5 5cat customer.txtdate[K[1Ppwdwhoami[2Pexit./banker 3 3 210 5 5cat customer.txtexit[K[12@cat commands.tx[Customer[C[C[C[Cecho customer.txt [3P./banker 10 5 57gcc main.c -o bankerexit[Kgcc main.c -o banker
+[?2004l[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ gcc main.c -o bankerpwd[Kdatewhoami[2Pexit./banker 3 3 210 5 5cat customer.txt
+[?2004l4,0,0
+0,4,0
+0,0,3
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat customer.txtgcc main.c -o bankerpwd[Kdatewhoami[2Pexit./banker 3 3 210 5 5[1P3 3 2
+[?2004l=== ESTADO ATUAL DO SISTEMA ===
+
+MAXIMUM | ALLOCATION | NEED
+4 0 0 | 0 0 0 | 4 0 0 
+0 4 0 | 0 0 0 | 0 4 0 
+0 0 3 | 0 0 0 | 0 0 3 
+
+AVAILABLE 3 3 2 
+
+Estado inseguro: nao existe uma sequencia segura.
+
+Quantidade de comandos encontrados: 11
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ ./banker 3 3 2[1P[1@1[1P[1@1[C[C[C[C[K1
+[?2004l=== ESTADO ATUAL DO SISTEMA ===
+
+MAXIMUM | ALLOCATION | NEED
+4 0 0 | 0 0 0 | 4 0 0 
+0 4 0 | 0 0 0 | 0 4 0 
+0 0 3 | 0 0 0 | 0 0 3 
+
+AVAILABLE 1 1 1 
+
+Estado inseguro: nao existe uma sequencia segura.
+
+Quantidade de comandos encontrados: 11
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ exir[Kt
+[?2004lexit
+
+Script done on 2026-11-16 12:42:14-03:00 [COMMAND_EXIT_CODE="0"]

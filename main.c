@@ -60,17 +60,73 @@ int ler_cliente(char *linha, int recursos, int *valores) {
     return *posicao == '\0';
 }
 
+int verificar_seguranca(int **need, int **allocation, int *available, int clientes, int recursos, int *sequencia) {
+    int *work = malloc(recursos * sizeof(int));
+    int *finish = calloc(clientes > 0 ? clientes : 1, sizeof(int));
+
+    if (work == NULL || finish == NULL) {
+        free(work);
+        free(finish);
+        return -1;
+    }
+
+    for (int i = 0; i < recursos; i++) {
+        work[i] = available[i];
+    }
+
+    int concluidos = 0;
+    int progresso = 1;
+
+    while (progresso) {
+        progresso = 0;
+
+        for (int i = 0; i < clientes; i++) {
+            if (finish[i]) {
+                continue;
+            }
+
+            int pode_terminar = 1;
+
+            for (int j = 0; j < recursos; j++) {
+                if (need[i][j] > work[j]) {
+                    pode_terminar = 0;
+                    break;
+                }
+            }
+
+            if (pode_terminar) {
+                for (int j = 0; j < recursos; j++) {
+                    work[j] += allocation[i][j];
+                }
+
+                finish[i] = 1;
+                sequencia[concluidos++] = i;
+                progresso = 1;
+            }
+        }
+    }
+
+    free(work);
+    free(finish);
+
+    return concluidos == clientes;
+}
+
 int main(int argc, char *argv[]) {
     int recursos = argc - 1;
     int clientes = 0;
     int *available = NULL;
     int **max = NULL;
+    int **allocation = NULL;
+    int **need = NULL;
+    int *sequencia = NULL;
     char *linha = NULL;
     size_t capacidade = 0;
     ssize_t tamanho;
     FILE *arquivo_clientes = NULL;
     FILE *arquivo_comandos = NULL;
     int quantidade_comandos = 0;
+    int resultado_seguranca;
     int sucesso = 0;
 
     if (recursos <= 0) {
@@ -102,6 +158,8 @@ int main(int argc, char *argv[]) {
 
     while ((tamanho = getline(&linha, &capacidade, arquivo_clientes)) != -1) {
         int *valores = malloc(recursos * sizeof(int));
+        int *nova_alocacao = NULL;
+        int *nova_necessidade = NULL;
 
         if (valores == NULL) {
             fprintf(stderr, "Erro ao alocar memoria.\n");
@@ -114,16 +172,55 @@ int main(int argc, char *argv[]) {
             goto finalizar;
         }
 
-        int **nova_matriz = realloc(max, (clientes + 1) * sizeof(int *));
+        int **nova_max = realloc(max, (clientes + 1) * sizeof(int *));
 
-        if (nova_matriz == NULL) {
+        if (nova_max == NULL) {
             free(valores);
             fprintf(stderr, "Erro ao alocar memoria.\n");
             goto finalizar;
         }
 
-        max = nova_matriz;
+        max = nova_max;
+
+        int **nova_matriz_alocacao = realloc(allocation, (clientes + 1) * sizeof(int *));
+
+        if (nova_matriz_alocacao == NULL) {
+            free(valores);
+            fprintf(stderr, "Erro ao alocar memoria.\n");
+            goto finalizar;
+        }
+
+        allocation = nova_matriz_alocacao;
+
+        int **nova_matriz_necessidade = realloc(need, (clientes + 1) * sizeof(int *));
+
+        if (nova_matriz_necessidade == NULL) {
+            free(valores);
+            fprintf(stderr, "Erro ao alocar memoria.\n");
+            goto finalizar;
+        }
+
+        need = nova_matriz_necessidade;
+
+        nova_alocacao = calloc(recursos, sizeof(int));
+        nova_necessidade = malloc(recursos * sizeof(int));
+
+        if (nova_alocacao == NULL || nova_necessidade == NULL) {
+            free(valores);
+            free(nova_alocacao);
+            free(nova_necessidade);
+            fprintf(stderr, "Erro ao alocar memoria.\n");
+            goto finalizar;
+        }
+
         max[clientes] = valores;
+        allocation[clientes] = nova_alocacao;
+        need[clientes] = nova_necessidade;
+
+        for (int j = 0; j < recursos; j++) {
+            need[clientes][j] = max[clientes][j] - allocation[clientes][j];
+        }
+
         clientes++;
     }
 
@@ -151,30 +248,70 @@ int main(int argc, char *argv[]) {
         goto finalizar;
     }
 
-    printf("=== DADOS CARREGADOS ===\n");
-    printf("Quantidade de recursos: %d\n", recursos);
-    printf("Quantidade de clientes: %d\n", clientes);
+    sequencia = malloc((clientes > 0 ? clientes : 1) * sizeof(int));
 
-    printf("\nRecursos disponiveis:\n");
-
-    for (int i = 0; i < recursos; i++) {
-        printf("%d ", available[i]);
+    if (sequencia == NULL) {
+        fprintf(stderr, "Erro ao alocar memoria.\n");
+        goto finalizar;
     }
 
-    printf("\n\nMatriz MAX:\n");
+    resultado_seguranca = verificar_seguranca(need, allocation, available, clientes, recursos, sequencia);
+
+    if (resultado_seguranca == -1) {
+        fprintf(stderr, "Erro ao verificar a seguranca do sistema.\n");
+        goto finalizar;
+    }
+
+    printf("=== ESTADO ATUAL DO SISTEMA ===\n");
+
+    printf("\nMAXIMUM | ALLOCATION | NEED\n");
 
     for (int i = 0; i < clientes; i++) {
-        printf("Cliente %d: ", i);
-
         for (int j = 0; j < recursos; j++) {
             printf("%d ", max[i][j]);
+        }
+
+        printf("| ");
+
+        for (int j = 0; j < recursos; j++) {
+            printf("%d ", allocation[i][j]);
+        }
+
+        printf("| ");
+
+        for (int j = 0; j < recursos; j++) {
+            printf("%d ", need[i][j]);
         }
 
         printf("\n");
     }
 
+    printf("\nAVAILABLE ");
+
+    for (int i = 0; i < recursos; i++) {
+        printf("%d ", available[i]);
+    }
+
+    printf("\n");
+
+    if (resultado_seguranca) {
+        printf("\nEstado seguro.\n");
+        printf("Sequencia segura: ");
+
+        for (int i = 0; i < clientes; i++) {
+            printf("%d", sequencia[i]);
+
+            if (i < clientes - 1) {
+                printf(" -> ");
+            }
+        }
+
+        printf("\n");
+    } else {
+        printf("\nEstado inseguro: nao existe uma sequencia segura.\n");
+    }
+
     printf("\nQuantidade de comandos encontrados: %d\n", quantidade_comandos);
-    printf("\nLeitura dos arquivos concluida com sucesso!\n");
 
     sucesso = 1;
 
@@ -189,10 +326,15 @@ finalizar:
 
     for (int i = 0; i < clientes; i++) {
         free(max[i]);
+        free(allocation[i]);
+        free(need[i]);
     }
 
     free(max);
+    free(allocation);
+    free(need);
     free(available);
+    free(sequencia);
     free(linha);
 
     return sucesso ? EXIT_SUCCESS : EXIT_FAILURE;
