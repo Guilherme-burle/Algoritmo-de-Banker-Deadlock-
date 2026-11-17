@@ -6,69 +6,113 @@
 #include <limits.h>
 #include <sys/types.h>
 
-int converter_inteiro(const char *texto, int *valor) {
+int converter_numero(const char *texto, int *valor, int permitir_zero) {
     char *fim;
     long numero;
 
     errno = 0;
     numero = strtol(texto, &fim, 10);
 
-    if (texto == fim || *fim != '\0' || errno == ERANGE || numero <= 0 || numero > INT_MAX)
+    while (isspace((unsigned char)*fim))
+        fim++;
+
+    if (texto == fim || *fim != '\0' || errno == ERANGE ||
+        numero < (permitir_zero ? 0 : 1) || numero > INT_MAX)
         return 0;
 
     *valor = (int)numero;
     return 1;
 }
 
-int converter_nao_negativo(const char *texto, int *valor) {
-    char *fim;
-    long numero;
+int linha_vazia(const char *linha) {
+    while (*linha) {
+        if (!isspace((unsigned char)*linha))
+            return 0;
+        linha++;
+    }
 
-    errno = 0;
-    numero = strtol(texto, &fim, 10);
-
-    if (texto == fim || *fim != '\0' || errno == ERANGE || numero < 0 || numero > INT_MAX)
-        return 0;
-
-    *valor = (int)numero;
     return 1;
+}
+
+char *remover_espacos(char *texto) {
+    char *fim;
+
+    while (isspace((unsigned char)*texto))
+        texto++;
+
+    if (*texto == '\0')
+        return texto;
+
+    fim = texto + strlen(texto) - 1;
+
+    while (fim >= texto && isspace((unsigned char)*fim))
+        *fim-- = '\0';
+
+    return texto;
 }
 
 int ler_cliente(char *linha, int recursos, int *vetor) {
     char *token;
     char *resto;
-    int i = 0;
+    int quantidade = 0;
 
-    token = strtok_r(linha, ",\r\n", &resto);
+    token = strtok_r(linha, ",", &resto);
 
-    while (token != NULL && i < recursos) {
-        while (isspace((unsigned char)*token))
-            token++;
+    while (token != NULL) {
+        token = remover_espacos(token);
 
-        char *fim = token + strlen(token) - 1;
-
-        while (fim >= token && isspace((unsigned char)*fim))
-            *fim-- = '\0';
-
-        if (!converter_nao_negativo(token, &vetor[i]))
+        if (quantidade >= recursos ||
+            !converter_numero(token, &vetor[quantidade], 1))
             return 0;
 
-        i++;
-        token = strtok_r(NULL, ",\r\n", &resto);
+        quantidade++;
+        token = strtok_r(NULL, ",", &resto);
     }
 
-    return i == recursos && token == NULL;
+    return quantidade == recursos;
 }
 
-int verificar_seguranca(int clientes, int recursos, int **allocation, int **need, int *available, int mostrar_sequencia) {
+int expandir_clientes(int ***max, int ***allocation, int ***need,
+                      int clientes, int *capacidade) {
+    int nova_capacidade = *capacidade * 2;
+
+    int **novo_max = calloc(nova_capacidade, sizeof(int *));
+    int **novo_allocation = calloc(nova_capacidade, sizeof(int *));
+    int **novo_need = calloc(nova_capacidade, sizeof(int *));
+
+    if (novo_max == NULL || novo_allocation == NULL || novo_need == NULL) {
+        free(novo_max);
+        free(novo_allocation);
+        free(novo_need);
+        return 0;
+    }
+
+    for (int i = 0; i < clientes; i++) {
+        novo_max[i] = (*max)[i];
+        novo_allocation[i] = (*allocation)[i];
+        novo_need[i] = (*need)[i];
+    }
+
+    free(*max);
+    free(*allocation);
+    free(*need);
+
+    *max = novo_max;
+    *allocation = novo_allocation;
+    *need = novo_need;
+    *capacidade = nova_capacidade;
+
+    return 1;
+}
+
+int verificar_seguranca(int clientes, int recursos, int **allocation,
+                        int **need, int *available) {
     int *work = malloc(recursos * sizeof(int));
     int *finish = calloc(clientes, sizeof(int));
-    int *sequencia = malloc(clientes * sizeof(int));
 
-    if (work == NULL || finish == NULL || sequencia == NULL) {
+    if (work == NULL || finish == NULL) {
         free(work);
         free(finish);
-        free(sequencia);
         return -1;
     }
 
@@ -99,36 +143,16 @@ int verificar_seguranca(int clientes, int recursos, int **allocation, int **need
                     work[j] += allocation[i][j];
 
                 finish[i] = 1;
-                sequencia[quantidade++] = i;
+                quantidade++;
                 progresso = 1;
             }
         }
     }
 
-    int seguro = quantidade == clientes;
-
-    if (mostrar_sequencia) {
-        if (seguro) {
-            printf("Estado seguro. Sequencia segura: ");
-
-            for (int i = 0; i < quantidade; i++) {
-                printf("%d", sequencia[i]);
-
-                if (i < quantidade - 1)
-                    printf(" -> ");
-            }
-
-            printf("\n");
-        } else {
-            printf("Estado inseguro.\n");
-        }
-    }
-
     free(work);
     free(finish);
-    free(sequencia);
 
-    return seguro;
+    return quantidade == clientes;
 }
 
 void imprimir_vetor(FILE *saida, int *vetor, int recursos) {
@@ -136,7 +160,8 @@ void imprimir_vetor(FILE *saida, int *vetor, int recursos) {
         fprintf(saida, "%s%d", j == 0 ? "" : " ", vetor[j]);
 }
 
-void imprimir_estado(FILE *saida, int clientes, int recursos, int **max, int **allocation, int **need, int *available) {
+void imprimir_estado(FILE *saida, int clientes, int recursos,
+                     int **max, int **allocation, int **need, int *available) {
     fprintf(saida, "MAXIMUM | ALLOCATION | NEED\n");
 
     for (int i = 0; i < clientes; i++) {
@@ -153,11 +178,11 @@ void imprimir_estado(FILE *saida, int clientes, int recursos, int **max, int **a
     fprintf(saida, "\n");
 }
 
-int ler_comando(char *linha, int recursos, char *tipo, int *cliente, int *vetor) {
+int ler_comando(char *linha, int recursos, char *tipo,
+                int *cliente, int *vetor) {
     char *token;
     char *resto;
     int quantidade = 0;
-    int valor;
 
     token = strtok_r(linha, " \t\r\n", &resto);
 
@@ -172,21 +197,24 @@ int ler_comando(char *linha, int recursos, char *tipo, int *cliente, int *vetor)
         return 3;
     }
 
-    if (strcmp(token, "RQ") != 0 && strcmp(token, "RL") != 0)
+    if (strcmp(token, "RQ") == 0)
+        *tipo = 'Q';
+    else if (strcmp(token, "RL") == 0)
+        *tipo = 'L';
+    else
         return -1;
-
-    *tipo = token[1];
 
     token = strtok_r(NULL, " \t\r\n", &resto);
 
-    if (token == NULL || !converter_nao_negativo(token, cliente))
+    if (token == NULL || !converter_numero(token, cliente, 1))
         return -1;
 
     while ((token = strtok_r(NULL, " \t\r\n", &resto)) != NULL) {
-        if (quantidade >= recursos || !converter_nao_negativo(token, &valor))
+        if (quantidade >= recursos ||
+            !converter_numero(token, &vetor[quantidade], 1))
             return -1;
 
-        vetor[quantidade++] = valor;
+        quantidade++;
     }
 
     if (quantidade != recursos)
@@ -199,6 +227,7 @@ int main(int argc, char *argv[]) {
     int recursos = argc - 1;
     int clientes = 0;
     int capacidade = 10;
+    int status = 1;
     int resultado;
     int cliente;
     int *total = NULL;
@@ -212,10 +241,11 @@ int main(int argc, char *argv[]) {
     char *linha = NULL;
     size_t tamanho = 0;
     ssize_t lidos;
+    int numero_linha = 0;
 
     if (argc < 2) {
         fprintf(stderr, "Uso: ./banker recurso1 recurso2 ...\n");
-        return 1;
+        goto finalizar;
     }
 
     total = malloc(recursos * sizeof(int));
@@ -227,7 +257,7 @@ int main(int argc, char *argv[]) {
     }
 
     for (int j = 0; j < recursos; j++) {
-        if (!converter_inteiro(argv[j + 1], &total[j])) {
+        if (!converter_numero(argv[j + 1], &total[j], 0)) {
             fprintf(stderr, "Quantidade de recursos invalida.\n");
             goto finalizar;
         }
@@ -252,51 +282,58 @@ int main(int argc, char *argv[]) {
     }
 
     while ((lidos = getline(&linha, &tamanho, arquivo_clientes)) != -1) {
-        if (lidos == 0)
+        numero_linha++;
+
+        if (linha_vazia(linha))
             continue;
 
         if (clientes == capacidade) {
-            int nova_capacidade = capacidade * 2;
-            int **novo_max = realloc(max, nova_capacidade * sizeof(int *));
-            int **novo_allocation = realloc(allocation, nova_capacidade * sizeof(int *));
-            int **novo_need = realloc(need, nova_capacidade * sizeof(int *));
-
-            if (novo_max == NULL || novo_allocation == NULL || novo_need == NULL) {
-                if (novo_max != NULL)
-                    max = novo_max;
-                if (novo_allocation != NULL)
-                    allocation = novo_allocation;
-                if (novo_need != NULL)
-                    need = novo_need;
-
+            if (!expandir_clientes(&max, &allocation, &need,
+                                  clientes, &capacidade)) {
                 fprintf(stderr, "Erro de memoria.\n");
                 goto finalizar;
             }
-
-            max = novo_max;
-            allocation = novo_allocation;
-            need = novo_need;
-            capacidade = nova_capacidade;
         }
 
         max[clientes] = malloc(recursos * sizeof(int));
         allocation[clientes] = calloc(recursos, sizeof(int));
         need[clientes] = malloc(recursos * sizeof(int));
 
-        if (max[clientes] == NULL || allocation[clientes] == NULL || need[clientes] == NULL) {
+        if (max[clientes] == NULL || allocation[clientes] == NULL ||
+            need[clientes] == NULL) {
+            free(max[clientes]);
+            free(allocation[clientes]);
+            free(need[clientes]);
+            max[clientes] = NULL;
+            allocation[clientes] = NULL;
+            need[clientes] = NULL;
             fprintf(stderr, "Erro de memoria.\n");
             goto finalizar;
         }
 
         if (!ler_cliente(linha, recursos, max[clientes])) {
-            fprintf(stderr, "Formato invalido em customer.txt.\n");
+            fprintf(stderr, "Formato invalido em customer.txt na linha %d.\n",
+                    numero_linha);
             goto finalizar;
         }
 
-        for (int j = 0; j < recursos; j++)
+        for (int j = 0; j < recursos; j++) {
+            if (max[clientes][j] > total[j]) {
+                fprintf(stderr,
+                        "Cliente %d solicita um maximo maior que os recursos disponiveis.\n",
+                        clientes);
+                goto finalizar;
+            }
+
             need[clientes][j] = max[clientes][j];
+        }
 
         clientes++;
+    }
+
+    if (ferror(arquivo_clientes)) {
+        fprintf(stderr, "Erro durante a leitura de customer.txt.\n");
+        goto finalizar;
     }
 
     fclose(arquivo_clientes);
@@ -321,8 +358,12 @@ int main(int argc, char *argv[]) {
         goto finalizar;
     }
 
+    numero_linha = 0;
+
     while ((lidos = getline(&linha, &tamanho, arquivo_comandos)) != -1) {
-        if (lidos == 0)
+        numero_linha++;
+
+        if (linha_vazia(linha))
             continue;
 
         char *copia = strdup(linha);
@@ -350,21 +391,24 @@ int main(int argc, char *argv[]) {
         }
 
         if (resultado == -1) {
-            fprintf(arquivo_resultado, "Comando invalido.\n");
+            fprintf(stderr, "Comando invalido em commands.txt na linha %d.\n",
+                    numero_linha);
             free(vetor);
-            continue;
+            goto finalizar;
         }
 
         if (resultado == 3) {
-            imprimir_estado(arquivo_resultado, clientes, recursos, max, allocation, need, available);
+            imprimir_estado(arquivo_resultado, clientes, recursos,
+                            max, allocation, need, available);
             free(vetor);
             continue;
         }
 
         if (cliente < 0 || cliente >= clientes) {
-            fprintf(arquivo_resultado, "Cliente invalido na requisicao.\n");
+            fprintf(stderr, "Cliente invalido em commands.txt na linha %d.\n",
+                    numero_linha);
             free(vetor);
-            continue;
+            goto finalizar;
         }
 
         if (tipo == 'Q') {
@@ -380,9 +424,11 @@ int main(int argc, char *argv[]) {
             }
 
             if (excede_necessidade) {
-                fprintf(arquivo_resultado, "The customer %d request ", cliente);
+                fprintf(arquivo_resultado,
+                        "The customer %d request ", cliente);
                 imprimir_vetor(arquivo_resultado, vetor, recursos);
-                fprintf(arquivo_resultado, " was denied because exceed its maximum allocation\n");
+                fprintf(arquivo_resultado,
+                        " was denied because exceed its maximum allocation\n");
                 free(vetor);
                 continue;
             }
@@ -390,7 +436,8 @@ int main(int argc, char *argv[]) {
             if (recursos_insuficientes) {
                 fprintf(arquivo_resultado, "The resources ");
                 imprimir_vetor(arquivo_resultado, available, recursos);
-                fprintf(arquivo_resultado, " are not enough to customer %d request ", cliente);
+                fprintf(arquivo_resultado,
+                        " are not enough to customer %d request ", cliente);
                 imprimir_vetor(arquivo_resultado, vetor, recursos);
                 fprintf(arquivo_resultado, "\n");
                 free(vetor);
@@ -403,10 +450,12 @@ int main(int argc, char *argv[]) {
                 need[cliente][j] -= vetor[j];
             }
 
-            resultado = verificar_seguranca(clientes, recursos, allocation, need, available, 0);
+            resultado = verificar_seguranca(clientes, recursos,
+                                            allocation, need, available);
 
             if (resultado == 1) {
-                fprintf(arquivo_resultado, "Allocate to customer %d the resources ", cliente);
+                fprintf(arquivo_resultado,
+                        "Allocate to customer %d the resources ", cliente);
                 imprimir_vetor(arquivo_resultado, vetor, recursos);
                 fprintf(arquivo_resultado, "\n");
             } else {
@@ -417,9 +466,11 @@ int main(int argc, char *argv[]) {
                 }
 
                 if (resultado == 0) {
-                    fprintf(arquivo_resultado, "The customer %d request ", cliente);
+                    fprintf(arquivo_resultado,
+                            "The customer %d request ", cliente);
                     imprimir_vetor(arquivo_resultado, vetor, recursos);
-                    fprintf(arquivo_resultado, " was denied because result in an unsafe state\n");
+                    fprintf(arquivo_resultado,
+                            " was denied because result in an unsafe state\n");
                 } else {
                     fprintf(stderr, "Erro ao verificar estado de seguranca.\n");
                     free(vetor);
@@ -435,9 +486,11 @@ int main(int argc, char *argv[]) {
             }
 
             if (excede_alocacao) {
-                fprintf(arquivo_resultado, "The customer %d release ", cliente);
+                fprintf(arquivo_resultado,
+                        "The customer %d release ", cliente);
                 imprimir_vetor(arquivo_resultado, vetor, recursos);
-                fprintf(arquivo_resultado, " was denied because exceed its allocation\n");
+                fprintf(arquivo_resultado,
+                        " was denied because exceed its allocation\n");
                 free(vetor);
                 continue;
             }
@@ -448,7 +501,8 @@ int main(int argc, char *argv[]) {
                 need[cliente][j] += vetor[j];
             }
 
-            fprintf(arquivo_resultado, "Release from customer %d the resources ", cliente);
+            fprintf(arquivo_resultado,
+                    "Release from customer %d the resources ", cliente);
             imprimir_vetor(arquivo_resultado, vetor, recursos);
             fprintf(arquivo_resultado, "\n");
         }
@@ -456,13 +510,24 @@ int main(int argc, char *argv[]) {
         free(vetor);
     }
 
+    if (ferror(arquivo_comandos)) {
+        fprintf(stderr, "Erro durante a leitura de commands.txt.\n");
+        goto finalizar;
+    }
+
+    if (fclose(arquivo_resultado) != 0) {
+        arquivo_resultado = NULL;
+        fprintf(stderr, "Erro ao fechar result.txt.\n");
+        goto finalizar;
+    }
+
+    arquivo_resultado = NULL;
+
     fclose(arquivo_comandos);
     arquivo_comandos = NULL;
 
-    fclose(arquivo_resultado);
-    arquivo_resultado = NULL;
-
     printf("Resultado salvo em result.txt.\n");
+    status = 0;
 
 finalizar:
     if (arquivo_clientes != NULL)
@@ -497,5 +562,5 @@ finalizar:
     free(allocation);
     free(need);
 
-    return 0;
+    return status;
 }

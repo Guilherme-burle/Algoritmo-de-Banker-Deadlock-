@@ -324,3 +324,38 @@ The customer 2 request 0 1 0 was denied because exceed its maximum allocation
 [?2004lexit
 
 Script done on 2026-11-16 20:55:23-03:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2026-11-16 21:38:53-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="267" LINES="22"]
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ make
+[?2004lgcc -Wall -Wextra -std=c11 -D_POSIX_C_SOURCE=200809L main.c -o banker
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ makeexitcat result.txt ./banker 10 5 7
+[?2004lResultado salvo em result.txt.
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat result.txt 
+[?2004lAllocate to customer 0 the resources 0 2 1
+Allocate to customer 2 the resources 3 0 2
+Allocate to customer 1 the resources 2 0 0
+Allocate to customer 4 the resources 0 0 2
+Release from customer 0 the resources 0 1 1
+Allocate to customer 3 the resources 2 1 1
+MAXIMUM | ALLOCATION | NEED
+7 5 3 | 0 1 0 | 7 4 3
+3 2 2 | 2 0 0 | 1 2 2
+9 0 2 | 3 0 2 | 6 0 0
+2 2 2 | 2 1 1 | 0 1 1
+4 3 3 | 0 0 2 | 4 3 1
+AVAILABLE 3 3 2
+The resources 3 3 2 are not enough to customer 4 request 4 0 0
+Allocate to customer 1 the resources 1 0 2
+The customer 0 request 0 2 0 was denied because result in an unsafe state
+The customer 2 request 0 1 0 was denied because exceed its maximum allocation
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ cat result.txt ./banker 10 5 7[K[K[K[K
+[?2004lFormato invalido em customer.txt na linha 1.
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ ./banker 10[K[K
+[?2004lUso: ./banker recurso1 recurso2 ...
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ ./banker 10 10 10 10
+[?2004lFormato invalido em customer.txt na linha 1.
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ ./banker 10 10 10 10[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kmake cle\n[K[Kan
+[?2004lrm -f banker result.txt
+[?2004h]0;guilherme@DESKTOP-96RH0LV: ~/SO/Banker[01;32mguilherme@DESKTOP-96RH0LV[00m:[01;34m~/SO/Banker[00m$ exit
+[?2004lexit
+
+Script done on 2026-11-16 21:40:37-03:00 [COMMAND_EXIT_CODE="0"]
